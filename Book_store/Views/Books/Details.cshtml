@@ -1,0 +1,26 @@
+@model Book_store.Models.Book
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div class="col-md-4 mb-4">
+    <div class="card shadow h-100">
+        <img src="@Model.ImageUrl"
+             class="card-img-top"
+             alt="@Model.Title"
+             style="height: 300px; object-fit: cover;" />
+        <div class="card-body">
+            <h4>@Model.Title</h4>
+            <p>Price: @Model.Price.ToString("C")</p>
+            <p>Publisher: @Model.Publisher?.Name</p>
+
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
