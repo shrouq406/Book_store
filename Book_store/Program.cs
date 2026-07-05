@@ -1,4 +1,6 @@
 using Book_store.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
@@ -13,10 +15,27 @@ namespace Book_store
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddSession();
+           /* builder.Services.AddAuthentication(
+                CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Account/Login";
+                    options.AccessDeniedPath = "/Home/Denied";
+                });*/
+            builder.Services.AddAuthorization();
             builder.Services .AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 0;
+            })
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -40,6 +59,7 @@ namespace Book_store
 
             app.UseSession();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();

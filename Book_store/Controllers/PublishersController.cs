@@ -49,7 +49,7 @@ namespace Book_store.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Books")] Publisher publisher)
+        public async Task<IActionResult> Create(Publisher publisher)
         {
             if (ModelState.IsValid)
             {

@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Book_store.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+[Authorize]
 
-namespace Book_store.Controllers
-{
 public class BooksController : Controller
     {
         private readonly AppDbContext _context;
@@ -184,4 +184,3 @@ public class BooksController : Controller
             return _context.Books.Any(e => e.Id == id);
         }
     }
-}
